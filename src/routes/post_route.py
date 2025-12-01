@@ -26,6 +26,10 @@ def get_post(post_id: int, db: Session = Depends(get_db)):
     post = PostCRUD.get_post(db, post_id)
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+    
+    # print(post.images)
+    db.refresh(post, attribute_names=["images"])
+
     return post
 
 @router.put("/{post_id}", response_model=PostOut)

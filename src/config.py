@@ -1,16 +1,23 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    database_hostname: str
-    database_port: str
-    database_password: str
-    database_name: str
-    database_username: str
-    secret_key: str
-    algorithm: str
-    access_tokan_expire_minutes: int
 
-    class config:
+    SQLALCHEMY_DATABASE_URL: str
+    hostname: str
+    port: int
+    password: str
+    name: str
+    username: str
+
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
+
+    cloud_name: str
+    api_key: str
+    api_secret: str
+
+    class Config:
         env_file = ".env"
-        
+
 settings = Settings()

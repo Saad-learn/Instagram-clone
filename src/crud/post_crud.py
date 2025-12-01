@@ -13,7 +13,15 @@ class PostCRUD:
         db.add(post)
         db.commit()
         db.refresh(post)
-        url
+
+        image = PostImage( 
+            image_url=url,
+            post_id=post.id
+        )
+        db.add(image)
+        db.commit()
+        db.refresh(image)
+
         return post
 
     @staticmethod

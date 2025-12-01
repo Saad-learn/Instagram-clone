@@ -9,8 +9,8 @@ class PostImageOut(BaseModel):
     id: int
     image_url: str
     
-    # class Config:
-    #     from_attributes = True
+    class Config:
+        from_attributes = True
 
 class PostOut(BaseModel):
     id: int
@@ -18,7 +18,6 @@ class PostOut(BaseModel):
     created_at: datetime
     images: List[PostImageOut]
 
-    # class Config:
-    #     from_attributes = True
-
+    class Config:
+        from_attributes = True
 

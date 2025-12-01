@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from src.config import settings
 
-
-SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://postgres:saadkhan@127.0.0.1:5432/clone_db"
+SQLALCHEMY_DATABASE_URL = settings.SQLALCHEMY_DATABASE_URL
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=False)
 
@@ -17,11 +17,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
-# T44Sm_Wtp7UngbAtWolk0ZmczEE api secret
-# 985451642451868 api key
-# Cloud name: dfnqxqxhh
-
-
-

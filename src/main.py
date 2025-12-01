@@ -9,13 +9,14 @@ from src.routes.comment_route import router as comment_router
 from src.routes.story_route import router as story_router
 from src.routes.search_route import router as search_router
 
-# import cloudinary
+from src.config import settings
+import cloudinary
 
-# cloudinary.config(
-#     cloud_name = "dfnqxqxhh",
-#     api_key = "985451642451868",
-#     api_secret = "T44Sm_Wtp7UngbAtWolk0ZmczEE",
-# )
+cloudinary.config(
+    cloud_name=settings.cloud_name,
+    api_key=settings.api_key,
+    api_secret=settings.api_secret
+)
 
 Base.metadata.create_all(bind=engine)
 
