@@ -27,7 +27,6 @@ def get_post(post_id: int, db: Session = Depends(get_db)):
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
     
-    # print(post.images)
     db.refresh(post, attribute_names=["images"])
 
     return post

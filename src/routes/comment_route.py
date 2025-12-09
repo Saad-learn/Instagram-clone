@@ -14,7 +14,7 @@ router = APIRouter(prefix="/comments", tags=["comments"])
 @router.post("/post/{post_id}", response_model=CommentOut, status_code=status.HTTP_201_CREATED)
 def create_comment_for_post(post_id: int, payload: CommentCreate, db: Session = Depends(get_db), current_user: UserModel = Depends(get_current_user)):
     post = PostCRUD.get_post(db, post_id)
-    
+
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
     
@@ -32,9 +32,10 @@ def get_comment(comment_id: int, db: Session = Depends(get_db)):
 def update_comment(comment_id: int, payload: CommentCreate, db: Session = Depends(get_db), current_user: UserModel = Depends(get_current_user)):
     comment = CommentCRUD.get_comment(db, comment_id)
     if not comment:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Comment not found")
-    if comment.user_id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not allowed")
+        raise HTTPException(status_code=404, detail="Comment not found")
+    post = PostCRUD.get_post(db, comment.post_id)
+    if comment.user_id != current_user.id and post.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not allowed")
     updated = CommentCRUD.update_comment(db, comment, text=payload.text)
     return updated
 
@@ -42,9 +43,10 @@ def update_comment(comment_id: int, payload: CommentCreate, db: Session = Depend
 def delete_comment(comment_id: int, db: Session = Depends(get_db), current_user: UserModel = Depends(get_current_user)):
     comment = CommentCRUD.get_comment(db, comment_id)
     if not comment:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Comment not found")
-    if comment.user_id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not allowed")
+        raise HTTPException(status_code=404, detail="Comment not found")
+    post = PostCRUD.get_post(db, comment.post_id)
+    if comment.user_id != current_user.id and post.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not allowed")
     CommentCRUD.delete_comment(db, comment)
     return None
 
@@ -52,3 +54,4 @@ def delete_comment(comment_id: int, db: Session = Depends(get_db), current_user:
 def get_post_comments(post_id: int, db: Session = Depends(get_db)):
     comments = CommentCRUD.get_post_comments(db, post_id)
     return comments
+

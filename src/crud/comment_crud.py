@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from src.models.comment_model import Comment
 from src.schemas.comment_schemas import CommentCreate
 
+
 class CommentCRUD:
 
     @staticmethod
@@ -36,3 +37,4 @@ class CommentCRUD:
     @staticmethod
     def get_post_comments(db: Session, post_id: int):
         return db.query(Comment).filter(Comment.post_id == post_id).all()
+    

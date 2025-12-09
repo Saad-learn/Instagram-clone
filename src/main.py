@@ -11,12 +11,20 @@ from src.routes.search_route import router as search_router
 
 from src.config import settings
 import cloudinary
+# from celery import Celery
 
 cloudinary.config(
     cloud_name=settings.cloud_name,
     api_key=settings.api_key,
     api_secret=settings.api_secret
 )
+
+# Celery.config(
+#     "instagram_clone",
+#     CELERY_BROKEN_URL = settings.CELERY_BROKER_URL,
+#     CELERY_RESULT_BACKEND = settings.CELERY_RESULT_BACKEND,
+#     include=["app.tasks.story_tasks"]
+# )
 
 Base.metadata.create_all(bind=engine)
 

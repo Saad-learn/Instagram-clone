@@ -1,5 +1,4 @@
 from pydantic_settings import BaseSettings
-
 class Settings(BaseSettings):
 
     SQLALCHEMY_DATABASE_URL: str
@@ -16,6 +15,12 @@ class Settings(BaseSettings):
     cloud_name: str
     api_key: str
     api_secret: str
+
+    REDIS_HOST : str
+    REDIS_PORT : int
+
+    CELERY_BROKER_URL : str
+    CELERY_RESULT_BACKEND : str
 
     class Config:
         env_file = ".env"
